@@ -1,0 +1,77 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                echo "Fetching code from GIT"
+                echo "Compile and build using Maven"
+            }
+        }
+        stage('Unit Test') {
+            steps {
+                echo "Unit testing using PyTest"
+                
+            }
+            post {
+
+                success {
+                    emailext (
+                    to:"duyaus205@gmail.com",
+                    subject:"Test Sucessed",
+                    body:"Test is completed",
+                    attachLog: true
+                    )
+                }
+                failure {
+                    emailext(
+                    to:"duyaus205@gmail.com",
+                    subject:"Test Failed",
+                    body:"Test failed",
+                    attachLog: true
+                    )
+                }
+            }
+        }
+        stage('Code Quality Check') {
+            steps {
+                echo "Checking  quality of the code using Codacy"
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                echo "Scanning vulnerabilities with Snyk"
+            }
+            post {
+
+                success {
+                    emailext (
+                    to:"duyaus205@gmail.com",
+                    subject:"Success Security Test from Jenkins",
+                    body:" Security Test is completed",
+                    attachLog: true
+                    )
+                }
+                failure {
+                    emailext(
+                    to:"duyaus205@gmail.com",
+                    subject:"Failure Security Test from Jenkins",
+                    body:"Security Test failed",
+                    attachLog: true
+                    )
+                }
+            }
+        }
+        stage('Intergration Testing') {
+            steps {
+                echo "Integration testing using Playwrights on staging server"
+                sleep 10
+            }
+        }
+        stage('Deploy to production') {
+            steps {
+                echo "Deploying to production on EC2 instances"
+            }
+        }
+    }
+}
