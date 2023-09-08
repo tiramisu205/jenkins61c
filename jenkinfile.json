@@ -19,7 +19,7 @@ pipeline {
                     emailext (
                     to:"duyaus205@gmail.com",
                     subject:"Test Sucessed",
-                    body:"Test is completed",
+                    body:"Test 2 is completed",
                     attachLog: true
                     )
                 }
@@ -48,7 +48,7 @@ pipeline {
                     emailext (
                     to:"duyaus205@gmail.com",
                     subject:"Success Security Test ",
-                    body:" Security Test is completed",
+                    body:" Security Test 2 is completed",
                     attachLog: true
                     )
                 }
